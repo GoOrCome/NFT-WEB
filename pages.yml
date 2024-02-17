@@ -1,0 +1,19 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        uses: ./.github/actions/build-production
+      - name: Deploy
+        uses: actions/deploy-pages@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          source: /tmp/build
+          _auth: ${{ secrets.GITHUB_TOKEN }}
